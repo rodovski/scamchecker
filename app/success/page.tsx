@@ -56,18 +56,18 @@ function SuccessContent() {
 
   const scoreColor = report.riskScore >= 70 ? 'text-red-600' : report.riskScore >= 40 ? 'text-orange-500' : 'text-green-600'
   const verdictLabel = {
-    LIKELY_SCAM: '⚠️ Likely a Scam',
-    UNSURE: '🤔 Suspicious',
-    LIKELY_SAFE: '✅ Looks Legitimate',
+    LIKELY_SCAM: 'â ï¸ Likely a Scam',
+    UNSURE: 'ð¤ Suspicious',
+    LIKELY_SAFE: 'â Looks Legitimate',
   }[report.verdict]
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-10">
       <div className="text-center mb-6">
         <div className="inline-block bg-green-100 text-green-800 text-sm font-medium px-4 py-1 rounded-full mb-3">
-          ✓ Payment confirmed — Full report unlocked
+          â Payment confirmed â Full report unlocked
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">Your ScamCheck Report</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Your CheckThatMessage Report</h1>
       </div>
 
       {/* Verdict banner */}
@@ -84,20 +84,20 @@ function SuccessContent() {
 
       {/* Scam type */}
       <div className="bg-white rounded-2xl border border-gray-200 p-5 mb-4">
-        <h2 className="font-semibold text-gray-900 mb-2">🎯 Type of Scam</h2>
+        <h2 className="font-semibold text-gray-900 mb-2">ð¯ Type of Scam</h2>
         <p className="text-gray-700 capitalize">{report.scamType}</p>
       </div>
 
       {/* Red flags */}
       <div className="bg-white rounded-2xl border border-gray-200 p-5 mb-4">
-        <h2 className="font-semibold text-gray-900 mb-3">🚩 Red Flags Identified</h2>
+        <h2 className="font-semibold text-gray-900 mb-3">ð© Red Flags Identified</h2>
         {report.redFlags.length === 0 ? (
           <p className="text-gray-500 text-sm">No specific red flags identified.</p>
         ) : (
           <ul className="space-y-2">
             {report.redFlags.map((flag, i) => (
               <li key={i} className="flex gap-2 text-sm text-gray-700">
-                <span className="text-red-500 flex-shrink-0">●</span>
+                <span className="text-red-500 flex-shrink-0">â</span>
                 <span>{flag}</span>
               </li>
             ))}
@@ -107,13 +107,13 @@ function SuccessContent() {
 
       {/* Recommended action */}
       <div className="bg-white rounded-2xl border border-gray-200 p-5 mb-4">
-        <h2 className="font-semibold text-gray-900 mb-2">✅ What to Do</h2>
+        <h2 className="font-semibold text-gray-900 mb-2">â What to Do</h2>
         <p className="text-gray-700 text-sm">{report.recommendedAction}</p>
       </div>
 
       {/* Confidence */}
       <div className="bg-white rounded-2xl border border-gray-200 p-5 mb-4">
-        <h2 className="font-semibold text-gray-900 mb-2">📊 Analysis Confidence</h2>
+        <h2 className="font-semibold text-gray-900 mb-2">ð Analysis Confidence</h2>
         <div className="flex items-center gap-2">
           <span className={`text-sm font-medium px-3 py-1 rounded-full ${
             report.confidenceLevel === 'HIGH' ? 'bg-green-100 text-green-800' :
@@ -133,7 +133,7 @@ function SuccessContent() {
 
       <div className="mt-6 text-center">
         <a href="/" className="text-green-600 hover:text-green-700 text-sm font-medium">
-          ← Check another message
+          â Check another message
         </a>
       </div>
     </main>
