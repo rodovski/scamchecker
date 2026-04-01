@@ -60,21 +60,21 @@ export default function Home() {
 
   const verdictConfig = {
     LIKELY_SCAM: {
-      label: '⚠️ Likely a Scam',
+      label: 'â ï¸ Likely a Scam',
       bg: 'bg-red-50',
       border: 'border-red-300',
       text: 'text-red-700',
       badge: 'bg-red-100 text-red-800',
     },
     UNSURE: {
-      label: '🤔 Suspicious — Proceed with Caution',
+      label: 'ð¤ Suspicious â Proceed with Caution',
       bg: 'bg-orange-50',
       border: 'border-orange-300',
       text: 'text-orange-700',
       badge: 'bg-orange-100 text-orange-800',
     },
     LIKELY_SAFE: {
-      label: '✅ Looks Legitimate',
+      label: 'â Looks Legitimate',
       bg: 'bg-green-50',
       border: 'border-green-300',
       text: 'text-green-700',
@@ -90,7 +90,7 @@ export default function Home() {
           Not sure if that message is a scam?
         </h1>
         <p className="text-gray-600 text-lg">
-          Paste it below. We'll analyse it instantly — free.
+          Paste it below. We'll analyse it instantly â free.
         </p>
       </div>
 
@@ -102,7 +102,7 @@ export default function Home() {
         <textarea
           className="w-full border border-gray-300 rounded-xl p-4 text-gray-900 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
           rows={6}
-          placeholder="e.g. 'Congratulations! You've won a €500 gift card. Click here to claim...'"
+          placeholder="e.g. 'Congratulations! You've won a â¬500 gift card. Click here to claim...'"
           value={message}
           onChange={e => setMessage(e.target.value)}
           disabled={loading}
@@ -113,7 +113,7 @@ export default function Home() {
           disabled={loading || !message.trim()}
           className="mt-4 w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-semibold py-3 rounded-xl transition-colors text-base"
         >
-          {loading ? '🔍 Analysing...' : 'Check this message — it\'s free'}
+          {loading ? 'ð Analysing...' : 'Check this message â it\'s free'}
         </button>
       </div>
 
@@ -134,22 +134,22 @@ export default function Home() {
 
           {/* Paywall */}
           <div className="bg-white rounded-xl p-5 border border-gray-200">
-            <p className="font-semibold text-gray-900 mb-1">📋 Get the full breakdown</p>
+            <p className="font-semibold text-gray-900 mb-1">ð Get the full breakdown</p>
             <ul className="text-sm text-gray-600 space-y-1 mb-4">
-              <li>✓ Risk score (0–100)</li>
-              <li>✓ Type of scam identified</li>
-              <li>✓ Exact red flags explained</li>
-              <li>✓ What to do next</li>
-              <li>✓ Confidence level of analysis</li>
+              <li>â Risk score (0â100)</li>
+              <li>â Type of scam identified</li>
+              <li>â Exact red flags explained</li>
+              <li>â What to do next</li>
+              <li>â Confidence level of analysis</li>
             </ul>
             <button
               onClick={handleGetReport}
               disabled={checkingOut}
               className="w-full bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 text-white font-semibold py-3 rounded-xl transition-colors"
             >
-              {checkingOut ? 'Redirecting to payment...' : 'Get full report — €9'}
+              {checkingOut ? 'Redirecting to payment...' : 'Get full report â â¬9'}
             </button>
-            <p className="text-xs text-gray-400 text-center mt-2">Secure payment via Stripe · Instant delivery</p>
+            <p className="text-xs text-gray-400 text-center mt-2">Secure payment via Stripe Â· Instant delivery</p>
           </div>
         </div>
       )}
@@ -157,9 +157,9 @@ export default function Home() {
       {/* Trust signals */}
       <div className="mt-10 grid grid-cols-3 gap-4 text-center">
         {[
-          { icon: '⚡', title: 'Instant', sub: 'Results in seconds' },
-          { icon: '🔒', title: 'Private', sub: 'Messages not stored' },
-          { icon: '🤖', title: 'AI-powered', sub: 'Advanced detection' },
+          { icon: 'â¡', title: 'Instant', sub: 'Results in seconds' },
+          { icon: 'ð', title: 'Private', sub: 'Messages not stored' },
+          { icon: 'ð¤', title: 'AI-powered', sub: 'Advanced detection' },
         ].map(item => (
           <div key={item.title} className="bg-white rounded-xl p-4 border border-gray-200">
             <div className="text-2xl mb-1">{item.icon}</div>
@@ -175,7 +175,7 @@ export default function Home() {
         <div className="space-y-3">
           {[
             {
-              q: 'How does ScamCheck work?',
+              q: 'How does CheckThatMessage work?',
               a: 'We use advanced AI to analyse the language, structure, and patterns of your message against thousands of known scam techniques.',
             },
             {
