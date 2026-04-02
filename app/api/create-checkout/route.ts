@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
+  apiVersion: '2023-10-16' as any,
 })
 
 export async function POST(req: NextRequest) {
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
           price_data: {
             currency: 'eur',
             product_data: {
-              name: 'ScamCheck Full Report',
+              name: 'CheckThatMessage Full Report',
               description: 'Detailed scam analysis: risk score, scam type, red flags, recommended action & confidence level.',
             },
             unit_amount: 900, // €9.00
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&data=${encodeURIComponent(sessionId)}`,
       cancel_url: `${baseUrl}/`,
       metadata: {
-        analysisData: sessionId.substring(0, 500), // Stripe metadata limit
+        analysisData: sessionId.substring(0, 500),
       },
     })
 

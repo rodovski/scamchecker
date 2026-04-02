@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
-import { randomUUID } from 'crypto'
 
-// In-memory store for sessions (in production, use a database or Redis)
-// Vercel's serverless functions are stateless, so we use a simple approach:
-// The full analysis is included in the sessionId as a base64 encoded string
+// The full analysis is included in the sessionId as a base64url encoded string
 // This avoids needing a database for the MVP
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPC_API_KEY })
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
 const SYSTEM_PROMPT = `You are an expert scam detection analyst with deep knowledge of:
 - Phishing attacks (email, SMS, WhatsApp)
@@ -45,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     const response = await client.messages.create({
-            model: 'claude-haiku-4-5-20251001',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [
@@ -62,11 +59,11 @@ Respond with this exact JSON structure:
 {
   "verdict": "LIKELY_SCAM" | "UNSURE" | "LIKELY_SAFE",
   "riskCount": <number 0-10>,
-  "shortReason": "<one sentence, max 120 chars, factual>",
+  "shortReason": "<one sentence, max 120 chars, written in plain human language explaining the main red flag>",
   "riskScore": <number 0-100>,
   "scamType": "<type of scam or 'none detected'>",
-  "redFlags": ["<flag 1>", "<flag 2>", "<flag 3>"],
-  "recommendedAction": "<what the person should do>",
+  "redFlags": ["<specific flag 1>", "<specific flag 2>", "<specific flag 3>"],
+  "recommendedAction": "<clear, specific advice on what this person should do>",
   "confidenceLevel": "HIGH" | "MEDIUM" | "LOW",
   "disclaimer": "This is an AI-based assessment and should not be taken as a guarantee. When in doubt, contact the alleged sender directly through official channels."
 }`
@@ -78,15 +75,16 @@ Respond with this exact JSON structure:
 
     let parsed
     try {
-      // Remove any markdown code blocks if present
       const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
       parsed = JSON.parse(cleaned)
     } catch {
       return NextResponse.json({ error: 'Analysis failed, please try again' }, { status: 500 })
     }
 
-    // Create a session ID that encodes the full result (base64) for retrieval after payment
-    // In production, store this in a database. For MVP, we encode it.
+    // Cap riskCount at 10 to avoid inflated numbers
+    parsed.riskCount = Math.min(parsed.riskCount ?? 0, 10)
+
+    // Create a session ID that encodes the full result (base64url) for retrieval after payment
     const fullData = {
       ...parsed,
       message: message.substring(0, 200) + (message.length > 200 ? '...' : ''),

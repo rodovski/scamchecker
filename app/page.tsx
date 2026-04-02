@@ -44,7 +44,7 @@ export default function Home() {
     if (!result) return
     setCheckingOut(true)
     try {
-      const res = await fetch('/api/checkout', {
+      const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId: result.sessionId }),
@@ -56,6 +56,16 @@ export default function Home() {
       setError(e.message || 'Could not start payment. Please try again.')
       setCheckingOut(false)
     }
+  }
+
+  function getRiskLabel(riskCount: number, verdict: string): string {
+    if (verdict === 'LIKELY_SCAM') return 'Multiple high-risk signals found'
+    if (verdict === 'UNSURE') {
+      if (riskCount >= 3) return 'Several suspicious signals found'
+      return 'Some suspicious signals found'
+    }
+    if (riskCount === 0) return 'No risk signals found'
+    return '1 minor signal found'
   }
 
   const verdictConfig = {
@@ -125,11 +135,16 @@ export default function Home() {
               {verdictConfig[result.verdict].label}
             </span>
             <span className={`text-sm font-medium px-3 py-1 rounded-full ${verdictConfig[result.verdict].badge}`}>
-              {result.riskCount} risk signal{result.riskCount !== 1 ? 's' : ''} found
+              {getRiskLabel(result.riskCount, result.verdict)}
             </span>
           </div>
-          <p className={`text-sm ${verdictConfig[result.verdict].text} mb-5`}>
+
+          <p className={`text-base ${verdictConfig[result.verdict].text} mb-5 leading-relaxed`}>
             {result.shortReason}
+          </p>
+
+          <p className="text-sm text-gray-600 mb-4">
+            We identified patterns that scammers commonly use. The full report shows exactly how this message is trying to manipulate you.
           </p>
 
           {/* Paywall */}
@@ -147,7 +162,7 @@ export default function Home() {
               disabled={checkingOut}
               className="w-full bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 text-white font-semibold py-3 rounded-xl transition-colors"
             >
-              {checkingOut ? 'Redirecting to payment...' : 'Get full report - €9'}
+              {checkingOut ? 'Redirecting to payment...' : 'Unlock full analysis - €9'}
             </button>
             <p className="text-xs text-gray-400 text-center mt-2">Secure payment via Stripe · Instant delivery</p>
           </div>
