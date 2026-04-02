@@ -20,12 +20,12 @@ export async function POST(req: NextRequest) {
       line_items: [
         {
           price_data: {
-            currency: 'eur',
+            currency: 'usd',
             product_data: {
               name: 'CheckThatMessage Full Report',
               description: 'Detailed scam analysis: risk score, scam type, red flags, recommended action & confidence level.',
             },
-            unit_amount: 900, // €9.00
+            unit_amount: 100, // $1.00 (test price)
           },
           quantity: 1,
         },
