@@ -18,9 +18,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </header>
         {children}
-        <footer className="mt-16 py-8 text-center text-xs text-gray-400">
+        <footer className="mt-16 py-8 border-t border-gray-200 text-center text-xs text-gray-400">
           <p>CheckThatMessage uses AI to help detect suspicious messages. Results are indicative - always use your own judgment.</p>
           <p className="mt-1">© {new Date().getFullYear()} CheckThatMessage · Not legal advice</p>
+          <div className="mt-3 flex justify-center gap-4">
+            <a href="/privacy" className="hover:text-gray-600 transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-gray-600 transition-colors">Terms of Service</a>
+            <a href="/disclaimer" className="hover:text-gray-600 transition-colors">Disclaimer</a>
+            <a href="/refund" className="hover:text-gray-600 transition-colors">Refund Policy</a>
+          </div>
         </footer>
       </body>
     </html>
